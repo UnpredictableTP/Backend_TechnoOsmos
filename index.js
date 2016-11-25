@@ -11,6 +11,7 @@ const app = express();
 const cors = require('cors')
 const host = 'https://osmosbackend.herokuapp.com/'
 
+
 app.use(cors());
 websokify(app);
 app.use(parser.json());
