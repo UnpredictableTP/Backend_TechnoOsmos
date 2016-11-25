@@ -56,7 +56,7 @@ app.post('/api/users', function (req, res) {
 		};
 
 		users.set(id, user);
-		res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000});
+		res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000, domain: 'https://unpredictable.herokuapp.com'});
 		res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000, domain: host});
 		return res.json(user);
 	}
