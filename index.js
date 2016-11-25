@@ -94,7 +94,6 @@ app.post('/api/login', function (req,res) {
 				login: body.login,
 				score: 0
 			};
-			users.set(id, user);
 			users.get(id, user);
 			res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000});
 			res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000, domain: 'localhost:5000'});
@@ -110,8 +109,14 @@ app.post('/api/login', function (req,res) {
 // разлогиниться
 
 app.delete('/api/delete', function (req, res) {
-	req.cookies.secret = res.cookie('secret', id, {path: '/', maxAge: -12 * 60 * 60 * 1000});
-	req.cookies.secret = res.cookie('secret', id, {path: '/', maxAge: -12 * 60 * 60 * 1000, domain: 'localhost:5000'});;
+	const body = req.body;
+	const id = createHash('sha256');
+	id.update(JSON.stringify({
+		login: body.login,
+		password: body.password
+	}));
+	req.cookies.secret = res.cookie('secret', id, {path: '/', maxAge: 0});
+	req.cookies.secret = res.cookie('secret', id, {path: '/', maxAge: 0, domain: 'localhost:5000'});;
 	res.status(200).end();
 });
 
