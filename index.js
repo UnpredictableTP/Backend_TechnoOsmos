@@ -55,8 +55,8 @@ app.post('/api/users', function (req, res) {
 		};
 
 		users.set(id, user);
-		res.cookie('secret', id, {maxAge: 12 * 60 * 60 * 1000});
-		res.cookie('secret', id, {maxAge: 12 * 60 * 60 * 1000, domain: host});
+		res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000});
+		res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000, domain: host});
 		return res.json(user);
 	}
 	return res.status(400).json({error: 'нет логина и пароля'});
@@ -96,8 +96,8 @@ app.post('/api/login', function (req,res) {
 				score: 0
 			};
 			users.get(id, user);
-			res.cookie('secret', id, {maxAge: 12 * 60 * 60 * 1000});
-			res.cookie('secret', id, {maxAge: 12 * 60 * 60 * 1000, domain: host});
+			res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000});
+			res.cookie('secret', id, {path: '/', maxAge: 12 * 60 * 60 * 1000, domain: host});
 			return res.json(user);
 		} else {
 			return res.status(400).json({error: 'Неверная пара логин/пароль'});
@@ -116,8 +116,8 @@ app.delete('/api/delete', function (req, res) {
 		login: body.login,
 		password: body.password
 	}));
-	req.cookies.secret = res.cookie('secret', id, {maxAge: 0});
-	req.cookies.secret = res.cookie('secret', id, {maxAge: 0, domain: host});;
+	req.cookies.secret = res.cookie('secret', id, {path: '/', maxAge: 0});
+	req.cookies.secret = res.cookie('secret', id, {path: '/', maxAge: 0, domain: host});;
 	res.status(200).end();
 });
 
